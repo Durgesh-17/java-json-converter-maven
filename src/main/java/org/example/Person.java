@@ -8,6 +8,8 @@ public class Person {
     private double balance;
     private List<String> interests;
 
+    public Person(){};
+
     public Person(String name, int age, double balance, List<String> interests){
         this.name = name;
         this.age = age;
