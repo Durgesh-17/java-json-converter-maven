@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package org.example;
+
+message Human{
+  string name = 1;
+  int32  age = 2;
+  double balance = 3;
+  repeated string interests = 4;
+}

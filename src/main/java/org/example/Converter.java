@@ -1,8 +1,14 @@
 package org.example;
+import org.example.HumanOuterClass.Human;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.google.gson.Gson;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class Converter {
@@ -32,6 +38,26 @@ public class Converter {
         XmlMapper xmlMapper = new XmlMapper();
         Person person = xmlMapper.readValue(xmlString, Person.class);
         return person;
+    }
+
+    //proto serializer
+    public static void toProto(Human human,String filePath){
+        try {
+            FileOutputStream output = new FileOutputStream(filePath);
+            human.writeTo(output);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    //proto deserializer
+    public static Human fromProto(String filePath){
+        try {
+            FileInputStream input = new FileInputStream(filePath);
+            return Human.parseFrom(input); //return type --> Human
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

@@ -1,4 +1,5 @@
 package org.example;
+import org.example.HumanOuterClass.Human;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -49,7 +50,34 @@ public class Main {
         System.out.println(personXmlRestored.getBalance());
         System.out.println(personXmlRestored.getInterests());
 
+        //protobuf
+        Human.Builder humanBuilder = Human.newBuilder();
+        humanBuilder.setName("Durgesh");
+        humanBuilder.setAge(21);
+        humanBuilder.setBalance(200.01);
+        humanBuilder.addInterests("chess");
+        humanBuilder.addInterests("movies");
+        humanBuilder.addInterests("proto");
 
+
+        Human human = humanBuilder.build();
+
+        String filePath = "human.bin";
+
+        byte[] humanData = human.toByteArray();
+
+        Converter.toProto(human,filePath);
+
+        Human deserializedHuman = Converter.fromProto(filePath);
+
+        System.out.println(deserializedHuman.getName());
+        System.out.println(deserializedHuman.getAge());
+        System.out.println(deserializedHuman.getBalance());
+        System.out.println(deserializedHuman.getInterestsList());
     }
-
 }
+
+
+
+
+
